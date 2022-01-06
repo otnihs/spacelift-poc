@@ -8,9 +8,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    region  = "us-east-1"
-    bucket  = ""
-    key     = "terraform/one_file_tf/simple_nginx_stack/main.tf"
+    region  = "us-west-2"
+    bucket  = "spacelift-shpoc"
+    key     = "main.tf"
     encrypt = true
   }
 }

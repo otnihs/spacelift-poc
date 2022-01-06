@@ -3,17 +3,10 @@
 # SPDX-License-Identifier: MIT-0
 
 provider "aws" {
-  region = "us-west-2"
+  region = "us-east-1"
 }
 
-terraform {
-  backend "s3" {
-    region  = "us-west-2"
-    bucket  = "spacelift-shpoc"
-    key     = "main.tf"
-    encrypt = true
-  }
-}
+
 
 // Provision VPC Stack
 

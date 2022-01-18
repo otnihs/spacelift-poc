@@ -169,6 +169,15 @@ resource "aws_security_group_rule" "allow_internal_vpc" {
   security_group_id = aws_security_group.lc_sg.id
 }
 
+resource "tls_private_key" "nginx-demo-key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = var.key_name
+  public_key = tls_private_key.nginx-demo-key.public_key_openssh
+}
 resource "aws_launch_configuration" "my_sample_lc" {
   name_prefix     = "${var.lc_name}-"
   image_id        = var.ami_id

@@ -11,6 +11,7 @@ Resources:
         - CAPABILITY_IAM
         - CAPABILITY_NAMED_IAM
         - CAPABILITY_AUTO_EXPAND
+      ActionMode: CHANGE_SET_REPLACE
   Function1StackPermissionProd:
     Type: AWS::Lambda::Permission
     Properties:

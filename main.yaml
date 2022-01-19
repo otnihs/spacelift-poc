@@ -7,6 +7,8 @@ Resources:
       TemplateURL: functionStack.yaml
       Parameters:
         Name: "function1"
+      Capabilities:
+        - CAPABILITY_IAM
   Function1StackPermissionProd:
     Type: AWS::Lambda::Permission
     Properties:

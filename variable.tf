@@ -79,10 +79,6 @@ variable "volume_size" {
 }
 
 
-variable "worker_pool_id" {
-  type        = string
-  description = "01FSRVG2ZXHK5KE9BXY5HZ6YY7"
-}
 
 locals {
   namespace = "sp5ft-${var.worker_pool_id}"

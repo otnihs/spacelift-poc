@@ -9,6 +9,8 @@ Resources:
         Name: "function1"
       Capabilities:
         - CAPABILITY_IAM
+        - CAPABILITY_NAMED_IAM
+        - CAPABILITY_AUTO_EXPAND
   Function1StackPermissionProd:
     Type: AWS::Lambda::Permission
     Properties:

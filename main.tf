@@ -7,7 +7,7 @@ module "my_workerpool" {
   EOT
 
   max_size          = 1
-  ami_id            = var.worker_pool_ami_id
+  ami_id            = "ami-00baf9444fedc7504"
   worker_pool_id    = var.worker_pool_id
   security_groups   = var.worker_pool_security_groups
   vpc_subnets       = var.worker_pool_subnets

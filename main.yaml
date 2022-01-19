@@ -1,12 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: A simple EC2 instance
-Configuration:
-  ActionMode: CHANGE_SET_REPLACE
-  ChangeSetName: changeset
-  RoleArn: arn:aws:iam::487178744936:role/spacelift-cf
-  StackName: Function1Stack
-  Capabilities: 
-    - CAPABILITY_IAM
 Resources:
   Function1Stack:
     Type: AWS::CloudFormation::Stack

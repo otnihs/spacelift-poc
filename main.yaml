@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A simple EC2 instance
+Resources:
+  Function1Stack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: functionStack.yaml
+      Parameters:
+        Name: "function1"
+  Function1StackPermissionProd:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+          - Function1Stack
+          - Outputs.FunctionArn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestAPI}/*/GET/hello1
+  Function2Stack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: functionStack.yaml
+      Parameters:
+        Name: "function2"
+  Function2StackPermissionProd:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+          - Function2Stack
+          - Outputs.FunctionArn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestAPI}/*/GET/hello2
+  RestAPI:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Body:
+        info:
+          title:
+            Ref: AWS::StackName
+          version: "1.0"
+        paths:
+          /hello1:
+            get:
+              responses: { }
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Function1Stack.Outputs.FunctionArn}/invocations
+          /hello2:
+            get:
+              responses: { }
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Function2Stack.Outputs.FunctionArn}/invocations
+        swagger: "2.0"
+  RestAPIDeployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId:
+        Ref: RestAPI
+      StageName: prod
+Outputs:
+  URLBase:
+    Description: "Base URL of the API."
+    Value: !Sub "https://${RestAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/"

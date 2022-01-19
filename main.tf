@@ -61,6 +61,6 @@ tSLN5kq1XLf0DywcLagV0I0m8DYEEfs=
   max_size          = 1
   ami_id            = "ami-00baf9444fedc7504"
   worker_pool_id    = "01FSRVG2ZXHK5KE9BXY5HZ6YY7"
-  security_groups   = [sg-af4fbfa4]
-  vpc_subnets       = [subnet-26ec9a7b, subnet-65c7472f]
+  security_groups   = ["sg-af4fbfa4"]
+  vpc_subnets       = ["subnet-26ec9a7b", "subnet-65c7472f"]
 }

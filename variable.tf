@@ -81,5 +81,5 @@ variable "volume_size" {
 
 
 locals {
-  namespace = "sp5ft-${var.worker_pool_id}"
+  namespace = "sp5ft-01FSRVG2ZXHK5KE9BXY5HZ6YY7"
 }

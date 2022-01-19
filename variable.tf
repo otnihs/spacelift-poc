@@ -56,11 +56,6 @@ variable "max_size" {
   default     = 10
 }
 
-variable "security_groups" {
-  type        = list(string)
-  description = "List of security groups to use"
-}
-
 variable "tags" {
   type = list(object({
     key                 = string
@@ -83,10 +78,6 @@ variable "volume_size" {
   description = "Size of instance EBS volume"
 }
 
-variable "vpc_subnets" {
-  type        = list(string)
-  description = "List of VPC subnets to use"
-}
 
 variable "worker_pool_id" {
   type        = string

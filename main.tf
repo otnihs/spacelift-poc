@@ -1,70 +1,44 @@
-provider "aws" {
-  region = "us-west-2"
+resource "aws_s3_bucket" "mywebsite" {
+bucket = "spacelift-poc-website"
+acl = "public-read"
+policy = file("policy.json")
+website {
+index_document = "index.html"
+error_document = "error.html"
 }
-module "my_workerpool" {
-  source = "github.com/spacelift-io/terraform-aws-spacelift-workerpool-on-ec2?ref=e954914020a5e1a561038cba27bb9d06438deba6"
+tags = {
+Name = "My website Bucket"
+Environment = "Terraform"
+}
+}
 
-  configuration = <<-EOT
-    export SPACELIFT_TOKEN="eyJicm9rZXIiOnsiZW5kcG9pbnQiOiJhcjM0enRleGs1M3FuLWF0cy5pb3QuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb20iLCJwdWJsaXNoX2NoYW5uZWxfZm9ybWF0Ijoic3BhY2VsaWZ0L3dyaXRlb25seS8wMUZTUlZHMlpYSEs1S0U5QlhZNUhaNllZNy8lcyIsInN1YnNjcmliZV9jaGFubmVsX2Zvcm1hdCI6InNwYWNlbGlmdC9yZWFkb25seS8wMUZTUlZHMlpYSEs1S0U5QlhZNUhaNllZNy8lcyJ9LCJwb29sX2NlcnQiOiItLS0tLUJFR0lOIENFUlRJRklDQVRFLS0tLS1cbk1JSUVnVENDQTJtZ0F3SUJBZ0lWQU9TZThFOFkzRWJqekRWZ2p1bW95dzNVQXI1ak1BMEdDU3FHU0liM0RRRUJcbkN3VUFNRTB4U3pCSkJnTlZCQXNNUWtGdFlYcHZiaUJYWldJZ1UyVnlkbWxqWlhNZ1R6MUJiV0Y2YjI0dVkyOXRcbklFbHVZeTRnVEQxVFpXRjBkR3hsSUZOVVBWZGhjMmhwYm1kMGIyNGdRejFWVXpBZUZ3MHlNakF4TVRrd09UUXhcbk1UUmFGdzAwT1RFeU16RXlNelU1TlRsYU1FVXhDekFKQmdOVkJBWVRBa0ZWTVJNd0VRWURWUVFJREFwVGIyMWxcbkxWTjBZWFJsTVNFd0h3WURWUVFLREJoSmJuUmxjbTVsZENCWGFXUm5hWFJ6SUZCMGVTQk1kR1F3Z2dJaU1BMEdcbkNTcUdTSWIzRFFFQkFRVUFBNElDRHdBd2dnSUtBb0lDQVFDK2FXdTNJc1hXRHpqSFQrbWRSNmkrTDBYK2QyUzZcbnkwVmFMbFRoaVUvUmRJampmM0FSUEF4dmZRTUNGWS83S3hmMDdWbmljTjM0VE1ReU1ydVNmYzI0Ulc0WXBRUTVcbjdPWG96blBCL2F2M1I2REIydUw0UGFYMHZqZS8zWnRHRk5INmRYWlowTzRYYy8yU3BjZmIreW03dmVEQ1VIdGxcbkZJZjg1NmpUQmFZZ2hmSWVLS25TSjBobi8ra2dBcHoyYWxBN1JHOWYyWVBveUcvdERQeWdjTHNIRVJTT3NCM0Jcbm15MDRqQWMwdjNtK0FraWwxMUE0Zy9JUmpub1NWdlVabXhualp2Sm8vU2I1b2FVOGJEQ0NEM0NEenVSdEprbWpcbitOM0hkNkZZZWtwSlJOczYxYUtWZmd2RnpHeWN3SExKSkdGckxvRm02TUVWRkFQUmpkdUlUY3dCcGtBT3hRWk1cbktnNC9zcjVnZS9iUlFQQ1V6Tld5WU50VWxQYy9ZTkQ1bGNZVUxvQVV1RU1zS2dYTGdBanFCbHorMjFvYzEzYy9cbkhnQjVNWHNDWWdIVFZLVFhXVVo1R3pkT0Q4VGdBS0RWbm1uNUdTakx2SGZUYjd2MFJzTjlsM3FrRHZsNUtHRXdcbllidUVnUXpWcTZXa1J5NnJOMlFZZVNaKzhVNEw1STBzRnFVMXJ4blBwWlcxOVg0SERBRS9tTnhDbkhCWVRRWlFcbkYvVS9ROXdYNlNtVjJrdW02UmptZ1haYk1vb091U3JvWlBodjM0UjlWS2syUDhvNVU0N2phSDk3azhqUWF4R3dcblNqTitUQUQ5K2l5dUlVUHdVS0pQVE93ZXZyWnhFbFB3WnUvRkV1YU1nU0sxNUFTMjBJbTFOZ2M1Y3d6bnNHdEVcbjZRZ2lFNWZ1SmJvazJ3SURBUUFCbzJBd1hqQWZCZ05WSFNNRUdEQVdnQlN1Mi9iWjVEclJWbll2S2FHV0xhVDdcbkJTWTY2akFkQmdOVkhRNEVGZ1FVdGF4YUFlK3p0dWRCMEU1VGZBK3p3TjdKOFU0d0RBWURWUjBUQVFIL0JBSXdcbkFEQU9CZ05WSFE4QkFmOEVCQU1DQjRBd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFEN2dSakc4M1prZ1dJSjlcbjBOL2pxVDNzZHVWL1VGVEhENCtwUEUraktJOHVCY0d3RVpWMUQ4cE5lZ1JXeGVYdldIWGNLdkY0eUtLWmpkbDBcbnBIaTgvS2hqajZLNnd1cXY1UnVlQ3VnZVZmMElsdjM1QWMzRlJyaE1MT1NqSnU5YlpvcS9YKzNDL2FodUlnWEtcbmw4Yk9zcDhQejFuUXBOM2JGQUd1TXZvVmRTNHNKZ0ZRZHFQcVNKVnpkN1VUME9TUnhRcDZ2K0ZGZ1BFYWMzQlNcbmRRUGJ4OTZiREFzL3dnNkpPMTNWdGpuZ1AvSExSaGVYV1F5VmFNbE1pV1Y0SjFIOXRId3ppc1p5RWpkWXIxMEZcbk0rWnpDYlFsYi9oL24zL0E5Yjl0a2JKSmVUVnRkRzBuck01QkZFaHpLclIwSThUWHN6M0xKS0pFN2t3cTJ0d05cbjBHVnhPMG89XG4tLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tXG4iLCJ3b3JrZXJfcG9vbF91bGlkIjoiMDFGU1JWRzJaWEhLNUtFOUJYWTVIWjZZWTcifQ=="
-    export SPACELIFT_POOL_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----
-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
-tSLN5kq1XLf0DywcLagV0I0m8DYEEfs=
------END PRIVATE KEY-----"
-
-  EOT
-
-  max_size          = 1
-  ami_id            = "ami-00baf9444fedc7504"
-  worker_pool_id    = "01FSRVG2ZXHK5KE9BXY5HZ6YY7"
-  security_groups   = ["sg-af4fbfa4"]
-  vpc_subnets       = ["subnet-26ec9a7b", "subnet-65c7472f"]
-  
+resource "aws_s3_bucket_object" "index" {
+bucket = aws_s3_bucket.mywebsite.id
+acl = "public-read" # or can be "public-read"
+key = "index.html"
+source = "./index.html"
+etag = filemd5("./index.html")
+content_type = "text/html"
+}
+resource "aws_s3_bucket_object" "error" {
+bucket = aws_s3_bucket.mywebsite.id
+acl = "public-read" # or can be "public-read"
+key = "error.html"
+source = "./error.html"
+etag = filemd5("./error.html")
+content_type = "text/html"
+}
+resource "aws_s3_bucket_object" "image" {
+bucket = aws_s3_bucket.mywebsite.id
+acl = "public-read" # or can be "public-read"
+key = "image.jpeg"
+source = "./image.jpeg"
+etag = filemd5("./image.jpeg")
+}
+resource "aws_s3_bucket_object" "error_image" {
+bucket = aws_s3_bucket.mywebsite.id
+acl = "public-read" # or can be "public-read"
+key = "error.jpeg"
+source = "./error.jpeg"
+etag = filemd5("./error.jpeg")
 }

@@ -1,8 +1,5 @@
-provider aws {}
-
-
-variable "stage" {}
-variable "project_name" {
-  
+provider aws {
+  region = "us-west-2"
 }
-variable "region" {}
+
+

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "mywebsite" {
-bucket = "spacelift-poc-website"
+bucket = "spacelift-demo-website"
 acl = "public-read"
 policy = file("policy.json")
 website {

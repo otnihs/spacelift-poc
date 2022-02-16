@@ -5,8 +5,8 @@ Name = "My website Bucket"
 Environment = "Terraform"
 }
 }
-resource "aws_s3_bucket_website_configuration" "site" {
-  bucket = aws_s3_bucket.website.id
+resource "aws_s3_bucket_website_configuration" "mywebsite" {
+  bucket = aws_s3_bucket.mywebsite.id
 
   index_document {
     suffix = "index.html"
@@ -17,7 +17,7 @@ resource "aws_s3_bucket_website_configuration" "site" {
   }
 }
 resource "aws_s3_bucket_acl" "mywebsite" {
-  bucket = aws_s3_bucket.website.id
+  bucket = aws_s3_bucket.mywebsite.id
 
   acl = "public-read"
   policy = file("policy.json")

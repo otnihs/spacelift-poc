@@ -1,7 +1,5 @@
 resource "aws_s3_bucket" "mywebsite" {
 bucket = "spacelift-demo-website"
-acl = "public-read"
-policy = file("policy.json")
 website {
 index_document = "index.html"
 error_document = "error.html"
@@ -10,6 +8,12 @@ tags = {
 Name = "My website Bucket"
 Environment = "Terraform"
 }
+}
+resource "aws_s3_bucket_acl" "mywebsite" {
+  bucket = aws_s3_bucket.site.id
+
+  acl = "public-read"
+  policy = file("policy.json")
 }
 
 resource "aws_s3_bucket_object" "index" {
